@@ -4,13 +4,14 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Lara vue | Dashboard</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+<div class="wrapper" id="app">
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
@@ -62,16 +63,16 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <router-link to="/dashboard" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
-            </a>
+            </router-link>
           </li>
 
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog"></i>
               <p>
                 Management
@@ -80,7 +81,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="./index.html" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Dashboard v1</p>
                 </a>
@@ -101,12 +102,12 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Profile
               </p>
-            </a>
+            </router-link>
           </li>
 
           <li class="nav-item">
@@ -129,8 +130,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-
-
+          <router-view></router-view>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
