@@ -17,26 +17,24 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Type</th>
+                    <th>Registered At</th>
                     <th>Modify</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
+                  <tr v-for="user in users" :key="user.id">
                     <td>
-                      Some Product
+                      {{ user.id }}
                     </td>
-                    <td>$13 USD</td>
+                    <td>{{ user.name }}</td>
                     <td>
-                      <small class="text-success mr-1">
-                        <i class="fa fa-arrow-up"></i>
-                        12%
-                      </small>
-                      12,000 Sold
+                      {{ user.email }}
                     </td>
                     <td>
-                      <a href="#" class="text-muted">
-                        <i class="fa fa-search"></i>
-                      </a>
+                      {{ user.type | upText }}
+                    </td>
+                    <td>
+                      {{ user.created_at | myDate}}
                     </td>
                     <td>
                       <a href="#">
@@ -125,7 +123,8 @@
     export default {
       data () {
         return {
-          // Create a new form instance
+          users: {},
+           // Create a new form instance
           form: new Form({
             name: '',
             email: '',
@@ -137,10 +136,25 @@
         }
       },
       methods: {
+        loadUsers(){
+          axios.get('api/user').then(({data}) => (this.users = data.data));
+        },
         createUser() {
+          this.$Progress.start();
           this.form.post('api/user');
+
+          $('#addNew').modal('hide');
+            Toast.fire({
+              type: 'success',
+              title: 'User created successfully'
+            });
+          this.$Progress.finish();
         }
 
+      },
+      created() {
+        this.loadUsers();
+        setInterval(() => this.loadUsers, 3000);
       }
     }
 </script>
