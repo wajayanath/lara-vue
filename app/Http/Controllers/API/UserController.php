@@ -62,7 +62,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return ['message' => 'Updated the user info'];
     }
 
     /**
