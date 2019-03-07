@@ -141,15 +141,22 @@
       },
       methods: {
         updateUser() {
-            this.progressbar.start();
+            this.$Progress.start();
             // console.log('editing data');
-            this.form.put('api/user'+this.form.id)
-            .then(()=> {
-
+            this.form.put('api/user/'+this.form.id)
+            .then(() => {
+                $('#addNew').modal('hide');
+                Swal.fire(
+                  'Updated!',
+                  'Your file has been updated .',
+                  'success'
+                )
+                 this.$Progress.finish();
+                 Fire.$emit('AfterCreate'); // refresh
             })
-            .catch(()=> {
-              this.progressbar.fail();
-            })
+            .catch(() => {
+              this.$Progress.fail();
+            });
 
         },
         editModal(user) {

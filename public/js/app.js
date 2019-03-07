@@ -1982,10 +1982,17 @@ __webpack_require__.r(__webpack_exports__);
     updateUser: function updateUser() {
       var _this = this;
 
-      this.progressbar.start(); // console.log('editing data');
+      this.$Progress.start(); // console.log('editing data');
 
-      this.form.put('api/user' + this.form.id).then(function () {}).catch(function () {
-        _this.progressbar.fail();
+      this.form.put('api/user/' + this.form.id).then(function () {
+        $('#addNew').modal('hide');
+        Swal.fire('Updated!', 'Your file has been updated .', 'success');
+
+        _this.$Progress.finish();
+
+        Fire.$emit('AfterCreate'); // refresh
+      }).catch(function () {
+        _this.$Progress.fail();
       });
     },
     editModal: function editModal(user) {
@@ -73988,8 +73995,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! G:\xampp\htdocs\lara-vue\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! G:\xampp\htdocs\lara-vue\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\xampp\htdocs\lara-vue\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\xampp\htdocs\lara-vue\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
