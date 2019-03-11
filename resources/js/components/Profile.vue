@@ -66,13 +66,15 @@
                                     <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                                     <div class="col-sm-12">
-                                    <input v-model="form.name" name="name" placeholder="Name" class="form-control" id="inputName" >
+                                    <input v-model="form.name" name="name" placeholder="Name" class="form-control" id="inputName" :class="{ 'is-invalid': form.errors.has('name') }">
+                                    <has-error :form="form" field="name"></has-error>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                                     <div class="col-sm-12">
-                                    <input v-model="form.email" name="name" type="email" class="form-control" id="inputEmail">
+                                    <input v-model="form.email" name="name" type="email" class="form-control" id="inputEmail" :class="{ 'is-invalid': form.errors.has('email') }">
+                                    <has-error :form="form" field="email"></has-error>
                                     </div>
                                 </div>
 
@@ -93,15 +95,16 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-12 control-label">Passport (leave empty if not changing)</label>
+                                    <label for="password" class="col-sm-12 control-label">password (leave empty if not changing)</label>
 
                                     <div class="col-sm-12">
                                     <input type="password"
-
+                                        v-model="form.password"
                                         class="form-control"
                                         id="password"
-                                        placeholder="Passport"
+                                        placeholder="password"
                                     >
+                                    <has-error :form="form" field="password"></has-error>
                                     </div>
                                 </div>
 
@@ -141,23 +144,34 @@
       },
       methods: {
         updateInfo() {
+          this.$Progress.start();
           this.form.put('api/profile')
           .then(() => {
 
+            this.$Progress.finish();
           })
           .catch(() => {
 
+            this.$Progress.fail();
           });
         },
         updateProfile(e) {
           let file = e.target.files[0];
-          // console.log(file);
+          console.log(file);
           let reader = new FileReader();
-          reader.onloadend = (file) => {
-            // console.log('RESULT', reader.result)
-            this.form.photo = reader.result;
+           if(file['size'] < 2111775){
+            reader.onloadend = (file) => {
+              // console.log('RESULT', reader.result)
+              this.form.photo = reader.result;
+            }
+            reader.readAsDataURL(file);
+          } else {
+              Swal.fire({
+                  type: 'error',
+                  title: 'Oops...',
+                  text: 'You are uploading a large file',
+              });
           }
-          reader.readAsDataURL(file);
         }
       },
       created() {
