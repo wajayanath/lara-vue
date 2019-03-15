@@ -9,6 +9,9 @@ require('./bootstrap');
 window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform'
 import moment from 'moment';
+import Gate from './Gate';
+Vue.prototype.$gate = new Gate(window.user);
+
 import VueProgressBar from 'vue-progressbar'
 // ES6 Modules or TypeScript
 import Swal from 'sweetalert2'
@@ -86,6 +89,11 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
+);
+
+Vue.component(
+    'not-found',
+    require('./components/NotFound.vue').default
 );
 
 const app = new Vue({

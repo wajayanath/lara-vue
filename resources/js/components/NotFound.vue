@@ -1,13 +1,17 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <not-found></not-found>
+            <div class="col-md-8">
+                    <p>404 | Not found</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
+        mounted() {
 
+        }
     }
 </script>

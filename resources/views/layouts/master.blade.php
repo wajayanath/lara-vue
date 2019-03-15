@@ -53,7 +53,10 @@
           <img src="./img/boy.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="#" class="d-block">
+            {{ Auth::user()->name }}
+            {{ Auth::user()->type }}
+          </a>
         </div>
       </div>
 
@@ -70,7 +73,7 @@
               </p>
             </router-link>
           </li>
-
+          @can('isAdmin')
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
@@ -97,7 +100,7 @@
               </p>
             </router-link>
           </li>
-
+          @endcan
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user orange"></i>
@@ -150,6 +153,12 @@
   </footer>
 </div>
 <!-- ./wrapper -->
+
+@auth
+<script>
+  window.user = @json(auth()->user())
+</script>
+@endauth
 
  <script src="{{ asset('js/app.js') }}" defer></script>
 </body>

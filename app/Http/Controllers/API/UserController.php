@@ -11,6 +11,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
+        // $this->authorize('isAdmin');
         $this->middleware('auth:api');
     }
     /**
@@ -20,6 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $this->authorize('isAdmin');
         return User::latest()->paginate(10);
     }
 
@@ -68,6 +70,7 @@ class UserController extends Controller
         ]);
 
         $currentPhoto = $user->photo;
+
         if($request->photo != $currentPhoto) {
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
             \Image::make($request->photo)->save(public_path('img/profile/').$name);
@@ -118,6 +121,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        $this->authorize('isAdmin');
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted'];
