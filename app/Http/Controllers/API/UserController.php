@@ -11,8 +11,8 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // $this->authorize('isAdmin');
         $this->middleware('auth:api');
+        // $this->authorize('isAdmin');
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +22,9 @@ class UserController extends Controller
     public function index()
     {
         // $this->authorize('isAdmin');
-        return User::latest()->paginate(10);
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+            return User::latest()->paginate(4);
+        }
     }
 
     /**
@@ -73,9 +75,14 @@ class UserController extends Controller
 
         if($request->photo != $currentPhoto) {
             $name = time().'.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+
             \Image::make($request->photo)->save(public_path('img/profile/').$name);
             $request->merge(['photo' => $name]);
 
+            $userPhoto = public_path('img/profile/').$currentPhoto;
+            if(file_exists($userPhoto)) {
+                @unlink($userPhoto);
+            }
         }
 
         if (!empty($request->password)) {
@@ -122,6 +129,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $this->authorize('isAdmin');
+
         $user = User::findOrFail($id);
         $user->delete();
         return ['message' => 'User Deleted'];

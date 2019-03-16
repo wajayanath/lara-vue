@@ -55,7 +55,7 @@
         <div class="info">
           <a href="#" class="d-block">
             {{ Auth::user()->name }}
-            {{ Auth::user()->type }}
+         <p>{{ Auth::user()->type }}</p>
           </a>
         </div>
       </div>
@@ -73,7 +73,8 @@
               </p>
             </router-link>
           </li>
-          @can('isAdmin')
+
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
@@ -91,7 +92,7 @@
               </li>
             </ul>
           </li>
-
+    @can('isAdmin')
           <li class="nav-item">
             <router-link to="/developer" class="nav-link">
               <i class="nav-icon fas fa-cogs"></i>
@@ -100,7 +101,8 @@
               </p>
             </router-link>
           </li>
-          @endcan
+    @endcan
+
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
               <i class="nav-icon fas fa-user orange"></i>

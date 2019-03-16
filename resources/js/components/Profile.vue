@@ -6,11 +6,11 @@
                 <div class="card card-widget widget-user">
               <!-- Add the bg color to the header using any of the bg-* classes -->
               <div class="widget-user-header text-white" style="background-image:url('./img/photo1.png')">
-                <h3 class="widget-user-username">Elizabeth Pierce</h3>
-                <h5 class="widget-user-desc">Web Designer</h5>
+                <h3 class="widget-user-username">{{ this.form.name }}</h3>
+                <h5 class="widget-user-desc">{{ this.form.type }}</h5>
               </div>
               <div class="widget-user-image">
-                <img class="img-circle" src="" alt="User Avatar">
+                <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
               </div>
               <div class="card-footer">
                 <div class="row">
@@ -143,11 +143,16 @@
         }
       },
       methods: {
+        getProfilePhoto () {
+
+          let photo = (this.form.photo.length > 100) ? this.form.photo : "img/profile/"+this.form.photo;
+          return photo;
+        },
         updateInfo() {
           this.$Progress.start();
           this.form.put('api/profile')
           .then(() => {
-
+            Fire.$emt('AfterCreate');
             this.$Progress.finish();
           })
           .catch(() => {

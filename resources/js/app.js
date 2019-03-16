@@ -29,12 +29,14 @@ window.Toast = Toast;
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 import VueRouter from 'vue-router'
 import Dashboard from './components/Dashboard.vue'
 import Developer from './components/Developer.vue'
 import Users from './components/Users.vue'
 import Profile from './components/Profile.vue'
+import NotFound from './components/NotFound.vue'
 
 Vue.use(VueRouter);
 
@@ -42,7 +44,8 @@ let routes = [
     { path: '/dashboard', component: Dashboard },
     { path: '/developer', component: Developer },
     { path: '/users', component: Users },
-    { path: '/profile', component: Profile }
+    { path: '/profile', component: Profile },
+    { path: '*', component: NotFound }
 ]
 const options = {
     color: '#bffaf3',
@@ -54,7 +57,7 @@ const options = {
         termination: 300
     },
     autoRevert: true,
-    location: 'left',
+    location: 'top',
     inverse: false
 }
 
