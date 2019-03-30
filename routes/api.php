@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('user', 'API\UserController');
-Route::get('profile','API\UserController@profile');
-Route::put('profile','API\UserController@updateProfile');
+Route::middleware(['auth:api','can:isAdmin'])->group(function () {
+    Route::apiResource('user', 'API\UserController');
+    Route::get('profile', 'API\UserController@profile');
+    Route::put('profile', 'API\UserController@updateProfile');
+});
