@@ -7,13 +7,13 @@ services:
   - mysql
 
 before_script:
-- php artisan cache:clear
-- php artisan config:cache
 - cp .env.example .env
 - composer self-update
 - composer install --no-interaction
 - mysql -e 'create database laravue;' -u root
 - php artisan key:generate
+- php artisan cache:clear
+- php artisan config:cache
 - php artisan migrate
 - npm install
 
