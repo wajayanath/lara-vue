@@ -12,8 +12,6 @@ before_script:
 - composer install --no-interaction
 - mysql -e 'create database laravue;' -u root
 - php artisan key:generate
-- php artisan cache:clear
-- php artisan config:cache
 - php artisan migrate
 - npm install
 
